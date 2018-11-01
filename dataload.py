@@ -46,6 +46,7 @@ def dataLoad(filename):
     # Update data
     invalid = list(set(temp_dev+growth_dev+bacteria_dev))
     data = np.delete(data, invalid)
+    data = data.reshape(int((len(data)/3)),3)
     return data
 
 data = dataLoad('test_data.txt')
