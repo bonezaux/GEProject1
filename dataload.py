@@ -44,9 +44,10 @@ def dataLoad(filename):
         print("Lines %s were removed because only values 1, 2, 3, or 4 are valid to denote the bacteria." % (bacteria_dev,))
     
     # Update data
-    invalid = list(set(temp_dev+growth_dev+bacteria_dev))
-    data = np.delete(data, invalid)
-    data = data.reshape(int((len(data)/3)),3)
+    invalid = tuple(set(temp_dev+growth_dev+bacteria_dev))
+    print()
+    print()
+    data = np.delete(data,np.asarray(invalid)-1,0)
     return data
 
 data = dataLoad('test_data.txt')
