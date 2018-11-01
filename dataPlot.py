@@ -9,7 +9,9 @@ import matplotlib.pyplot as plt
 import random
 def dataPlot(data):
     """
-    
+    Given an Nx3 bacteria data matrix matrix,
+    plots a bar chart with the number of rows for each bacteria type in the Nx3 matrix
+    and a graph for the growth rate of each bacteria type by temperature on the same coordinate system
     """
     bacteriaNames = ['Salmonella\nenterica', 'Bacillus\ncereus', 'Listeria', 'Brochothrix\nthermosphacta']
     
