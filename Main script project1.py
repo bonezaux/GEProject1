@@ -23,28 +23,30 @@ def MainScript():
         dataset = False
         
         if userinput == "1":
-            print("Entered no.1")
+            #Ask user to input filename
             filename = input("Write the name of the datafile: ")
+            #Check if file exists
             while dataset == False:
-                cwd = os.getcwd
+                cwd = os.getcwd()
                 datapath = os.path.join(cwd,filename)
-                if os.path.isfile(datapath):
+                if os.path.isfile(datapath) == True:
                     dataset = True
-                    from dataLoad import dataLoad
-                    data = dataLoad(filename)
+                    print("Your file: '%s' has been loaded" % (filename))
+                    print(dataset)
+                    data = filename
                 else:
                     print("Filename is not valid, check spelling and try again")
                     
         elif userinput == "2":
-            #Checking if user remembered to load in data
+            #Checking if user remembered to load in data first
             if dataset == False:
-                print("You must load the data first")
+                print("\n" + "You must start by loading the data.")
             else:
-                print ("do something")
+                print ("Choose a filter and print what filter is chosen ")
         elif userinput == "3":
-            #Checking if user remembered to load in data
+            #Checking if user remembered to load in data first
             if dataset == False:
-                print("You must load the data first")
+                print("\n" + "You must start by loading the data.")
             else:
                 from dataStatistics import dataStatistics
                 print(""" 
@@ -57,20 +59,21 @@ def MainScript():
                       7. Mean Growth rate when Temperature is greater than 50 degrees
                       """)
                 Statistics = input("Choose the number of the statistic you want calculated: ")
-                dataStatistics(data, "Statistics")
+                dataStatistics(data, Statistics)
         elif userinput == "4":
-            #Checking if user remembered to load in data
+            #Checking if user remembered to load in data first
             if dataset == False:
-                print("You must load the data first")
+                print("\n" + "You must start by loading the data.")
             else:
                 from dataPlot import dataPlot
-                dataPlot(#Remember to put in filtered data here) 
+                dataPlot()#Remember to put in filtered data here
         
         elif userinput == "5":
+            #quit
             break
-        
         else:
             print("You have entered an invalid input. Please press a number from 1 to 5")
     return
 
 MainScript()
+
