@@ -10,6 +10,7 @@ import os
 
 def MainScript():
     userinput = True
+    dataset = False
     
     while userinput:
         print("""
@@ -20,7 +21,6 @@ def MainScript():
               5. Quit 
               """)
         userinput = input("Choose a menu point by entering the number: ")
-        dataset = False
         
         if userinput == "1":
             #Ask user to input filename
