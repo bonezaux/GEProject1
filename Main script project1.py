@@ -5,6 +5,7 @@ Created on Sat Oct 27 12:16:22 2018
 
 @author: SarahMagid
 """
+
 import numpy as np
 import os
 from dataload import dataLoad
@@ -21,6 +22,8 @@ def filteredData(data, filterData, filterActive):
     result = data
     if(len(filterData["Bacteria"]) > 0):
         result = result[result[:,2]==(filterData["Bacteria"][0]+1)]
+    if(filterData["Growthmin"] != None and (filterData["Growthmax"]) != None):
+        result = result[result[:,1] <= filterData["Growthmax"] and result[:,1] >= filterData["Growthmin"]]
     return result
 
 def MainScript():
@@ -58,7 +61,6 @@ def MainScript():
             if os.path.isfile(datapath) == True:
                 dataset = True
                 print("Your file: '%s' has been loaded" % (filename))
-                print(dataset)
                 data = dataLoad(filename)
             else:
                 print("Filename is not valid, check spelling and try again")
@@ -92,9 +94,80 @@ def MainScript():
                             filterActive=True
                         
                     elif(int(fnum) == 2):
-                        pass
+                        minimum = None
+                        maximum = None
+                        
+                        minimum = input("Insert a number for the minimum growth rate: ")
+                        if (not minimum.isdigit()) or float(minimum) < 0 or int(minimum) > 1:
+                            print("You need to write a number between 0 and 1.")
+                        else:
+                            maximum = input("Insert a number for the maximum growth rate: ")
+                            if (not maximum.isdigit()) or int(maximum) < 0 or int(maximum) > 1:
+                                print("You need to write a number between 0 and 1.")
+                        
+                        #Checking if the minimum is less than maximum
+                        if minimum != None and maximum !=None:
+                            if not int(minimum) <= int(maximum):
+                                print("Invalid range. Minimum larger than or equal to maximum.")
+                            else:
+                                filterData["Growthmin"] = minimum
+                                filterData["Growthmax"] = maximum
+                                filterActive=True
+                            
                     elif(int(fnum) == 3):
-                        pass
+                        print(""" 
+                              1. Add a bacteriatype
+                              2. Reset bacteriafiltering
+                              3. Reset growth rate filter
+                              4. Reset all filters
+                              """)
+                        fchange = input("Choose a menupoint")
+                        if fchange =="1":
+                            #Print the bacteria names that are possible to choose
+                            print("\n".join([str(x+1)+". "+bacteriaNames[x] for x in range(4) if not x in filterData["Bacteria"]]))
+                            #Get a bacteria number
+                            bacteria = input("Pick a bacteria number to filter by: ")
+                        
+                            #Ensure that a valid number between 1 and 4 is provided
+                            if not bacteria.isdigit() or int(bacteria) < 1 or int(bacteria) > 4 or int(bacteria-1) in filterData["Bacteria"]:
+                                print("You need to write a valid bacteria number.")
+                            else:
+                            #Subtracting one to match array indices
+                                bacteria = int(bacteria)-1
+                                print("Filtering by " + bacteriaNames[bacteria])
+                                filterData["Bacteria"] += [bacteria]
+                                filterActive=True
+    
+                        elif fchange == "2":
+                            #Removes bacteriafiltering
+                            filterData["Bacteria"] = []
+                            print("Bacterierefiltering have been reset")
+                            
+                            #If no growthratefilter,there are no active filters
+                            if filterData["Growthmin"]==None and filterData["Growthmax"]==None:
+                                filterActive=False
+                            
+                        elif fchange == "3":
+                            #Removes growth range filtering
+                            filterData["Growthmin"] = None
+                            filterData["Growthmax"] = None
+                            print("Growth rate filter have been reset")
+                           
+                            #If no bacteriafilter, there are no active filters
+                            if filterData["Bacteria"]==[]:
+                                filterActive=False
+                                
+                        elif fchange == "4":
+                            #Reset all filters
+                            filterData["Growthmin"] = None
+                            filterData["Growthmax"] = None
+                            filterData["Bacteria"] = []
+                            #No active filters
+                            filterActive=False
+                            print("All filters have been reset")
+                            
+                        else:
+                            print("You should have chosen a menupoint between 1 and 4")
                     else:
                         print("That is not a valid filter.")
                 else:
@@ -142,4 +215,3 @@ def MainScript():
     return
 
 MainScript()
-
