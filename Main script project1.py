@@ -24,10 +24,10 @@ def MainScript():
         
         if userinput == "1":
             #Ask user to input filename
-            filename = input("Write the name of the datafile: ")
             #Check if file exists
             while dataset == False:
-                cwd = os.getcwd()
+                filename = input("Write the name of the datafile: ")
+				cwd = os.getcwd()
                 datapath = os.path.join(cwd,filename)
                 if os.path.isfile(datapath) == True:
                     dataset = True
