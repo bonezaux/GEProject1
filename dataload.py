@@ -49,7 +49,3 @@ def dataLoad(filename):
     print()
     data = np.delete(data,np.asarray(invalid)-1,0)
     return data
-
-data = dataLoad('test_data.txt')
-
-print(data)

@@ -49,8 +49,3 @@ def dataStatistics(data, statistics):
     else:
         print("Something went wrong with your input. Check if it is number between 1 and 7")
     return result
-
-from dataload import dataLoad
-datafile = dataLoad('test.txt')
-
-dataStatistics(datafile,"1")

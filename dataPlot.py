@@ -53,11 +53,3 @@ def dataPlot(data):
     plt.show()
     
     return bacteria
-
-
-
-dat = np.array([]).reshape(0,3)
-for x in range(61):
-    dat = np.vstack((dat, np.array([x, x**2/(61**2), random.randint(1,4)])))
-
-dataPlot(dat)
