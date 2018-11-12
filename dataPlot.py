@@ -6,13 +6,16 @@ Created on Thu Oct 25 14:16:25 2018
 """
 import numpy as np
 import matplotlib.pyplot as plt
-import random
+
 def dataPlot(data):
     """
     Given an Nx3 bacteria data matrix matrix,
     plots a bar chart with the number of rows for each bacteria type in the Nx3 matrix
     and a graph for the growth rate of each bacteria type by temperature on the same coordinate system
     """
+    if(data.size == 0):
+        print("No data selected. Change filter or load new file.")
+        return
     bacteriaNames = ['Salmonella\nenterica', 'Bacillus\ncereus', 'Listeria', 'Brochothrix\nthermosphacta']
     
     bacteria = []
@@ -49,7 +52,6 @@ def dataPlot(data):
     plt.yticks(np.arange(0, maxGrowth+0.1, maxGrowth/8))
     plt.xlabel('Temperature')
     #Make a legend for the bacteria growth plots for all bacterias we have measurements of
-    plt.legend((plts[x][0] for x in range(4) if bacteriaAmounts[x] > 0), bacteriaNames)
+    legend = [(plts[x][0], bacteriaNames[x]) for x in range(4) if bacteriaAmounts[x] > 0]
+    plt.legend((x[0] for x in legend), (x[1] for x in legend))
     plt.show()
-    
-    return bacteria

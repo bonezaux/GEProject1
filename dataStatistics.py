@@ -13,6 +13,10 @@ def dataStatistics(data, statistics):
     temperature, growth rate and bacteria. And a string specifying the the 
     statistics that should be calculated."""
     
+    if(data.size == 0):
+        print("No data selected. Change filter or load new file.")
+        return
+    
     if statistics == "1":
         result = np.mean(data[:,0]) 
     elif statistics == "2":
