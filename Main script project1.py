@@ -38,7 +38,11 @@ def MainScript():
             #Check if file exists
             if os.path.isfile(datapath) == True:
                 data = dataLoad(filename)
-                print("Your file: '%s' has been loaded" % (filename))
+                if(len(data) == 0):
+                    print("Invalid file! No data loaded.")
+                else:
+                    print("Your file: '%s' has been loaded" % (filename))
+                
             else:
                 print("Filename is not valid, check spelling and try again")
                     
