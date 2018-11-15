@@ -6,10 +6,9 @@ Created on Thu Nov 15 14:18:54 2018
 """
 import numpy as np
 
-#Apparently how you check whether something is a float in python.
 def isFloat(string):
     """
-    Checks whether a string is a float. Returns either true or false
+    Checks whether a string is a float. Returns either true or false.
     """
     try:
         float(string)
@@ -67,6 +66,7 @@ def filterMenu(filterData, filterActive, bacteriaNames):
         print("Write a number!")
         return (filterData, filterActive)
     
+    #Add/set bacteria filter
     if fnum == "1":
         #Print the bacteria names that are possible to choose
         print("\n".join([str(x+1)+". "+bacteriaNames[x] for x in range(4) if not x in filterData["Bacteria"]]))
@@ -82,9 +82,9 @@ def filterMenu(filterData, filterActive, bacteriaNames):
             print("Filtering by " + bacteriaNames[bacteria])
             filterData["Bacteria"] += [bacteria]
             filterActive=True
-        
+    
+    #Set growth rate filter
     elif fnum == "2":
-        #Sets growth rate filter
         minimum = None
         maximum = None
         minimum = input("Insert a number for the minimum growth rate: ")
@@ -102,27 +102,27 @@ def filterMenu(filterData, filterActive, bacteriaNames):
             else:
                 filterData["Growth"] = (float(minimum), float(maximum))
                 filterActive=True
-                
+    
+    #Remove bacteria filter        
     elif fnum == "3":
-        #Removes bacteria filter
         filterData["Bacteria"] = []
         print("Bacteria filter has been removed")
         
         #If no growth rate filter,there are no active filters
         if filterData["Growth"]==None:
             filterActive=False
-            
+
+    #Remove growth range filter            
     elif fnum == "4":
-        #Removes growth range filter
         filterData["Growth"] = None
         print("Growth rate filter have been removed")
        
         #If no bacteria filter, there are no active filters
         if filterData["Bacteria"]==[]:
             filterActive=False
-            
+    
+    #Remove all filters    
     elif fnum == "5":
-        #Remove all filters
         filterData["Growth"] = None
         filterData["Bacteria"] = []
         #No active filters

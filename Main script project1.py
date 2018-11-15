@@ -47,6 +47,7 @@ def MainScript():
                 print("Filename is not valid, check spelling and try again")
                     
         elif userinput == "2":
+            #Open filter menu, and set filter data to new data
             filterTmp = filter.filterMenu(filterData, filterActive, bacteriaNames)
             filterData = filterTmp[0]
             filterActive = filterTmp[1]
@@ -63,14 +64,19 @@ def MainScript():
                            "Mean Growth rate when Temperature is less than 20 degrees",
                            "Mean Growth rate when Temperature is greater than 50 degrees"]
                 
+                #Print options
                 for i,option in enumerate(options):
                     print(str(i+1) + ". " + option)
+                
+                #Make user input valid statistics
                 Statistics = False
                 while Statistics == False:
                     Statistics = input("Choose the number of the statistic you want calculated: ")
                     if (not Statistics.isdigit()) or int(Statistics) < 1 or int(Statistics) > 7:
                         Statistics = False
                         print("Write an integer between one and seven.")
+                
+                #Print stats, if they exist
                 stats = dataStatistics(filter.filteredData(data, filterData, filterActive), Statistics)
                 if(stats != None):
                     print(options[int(Statistics)-1] + " is " + str(round(stats,3)))
@@ -82,6 +88,7 @@ def MainScript():
             if len(data) == 0:
                 print("\n" + "You must first load data.")
             else:
+                #Plot and print filter
                 dataPlot(filter.filteredData(data, filterData, filterActive))
                 filter.printFilter(filterData, filterActive, bacteriaNames)
                 input("Press enter to continue ")
