@@ -42,14 +42,25 @@ def filteredData(data, filterData, filterActive):
     
     return result
 
+def printFilter(filterData, filterActive, bacteriaNames):
+    """
+    Prints current filter, if any, based on given filter data. Needs the bacteria names to print correctly.
+    """
+    if filterActive:
+            print("Current filter:")
+            if(len(filterData["Bacteria"]) > 0):
+                print("Bacteria: " + (", ".join(bacteriaNames[filterData["Bacteria"]])))
+            if(filterData["Growth"] != None):
+                print(str(filterData["Growth"][0]) + " <= Growth rate <= " + str(filterData["Growth"][1]))
+        
+
 def MainScript():
-    userinput = True
-    dataset = False
+    data = np.array([])
     filterData = { "Bacteria" : [], "Growth": None}
     filterActive = False
     bacteriaNames = np.array(["Salmonella enterica", "Bacillus cereus", "Listeria", "Brochothrix thermosphacta"])
     
-    while userinput:
+    while True:
         print("""
               1. Load data
               2. Filter data
@@ -57,27 +68,18 @@ def MainScript():
               4. Generate plots
               5. Quit 
               """)
-        if filterActive:
-            print("Current filter:")
-            if(len(filterData["Bacteria"]) > 0):
-                print("Bacteria: " + (", ".join(bacteriaNames[filterData["Bacteria"]])))
-            if(filterData["Growth"] != None):
-                print(str(filterData["Growth"][0]) + " <= Growth rate <= " + str(filterData["Growth"][1]))
+        printFilter(filterData, filterActive, bacteriaNames)
         userinput = input("Choose a menu point by entering the number: ")
         
         if userinput == "1":
-            #Unset data
-            dataset = False
-            
-        		#Ask user to input filename
+            #Ask user to input filename
             filename = input("Write the name of the data file: ")
             cwd = os.getcwd()
             datapath = os.path.join(cwd,filename)
             #Check if file exists
             if os.path.isfile(datapath) == True:
-                dataset = True
-                print("Your file: '%s' has been loaded" % (filename))
                 data = dataLoad(filename)
+                print("Your file: '%s' has been loaded" % (filename))
             else:
                 print("Filename is not valid, check spelling and try again")
                     
@@ -110,6 +112,7 @@ def MainScript():
                     filterActive=True
                 
             elif fnum == "2":
+                #Sets growth rate filter
                 minimum = None
                 maximum = None
                 minimum = input("Insert a number for the minimum growth rate: ")
@@ -159,7 +162,7 @@ def MainScript():
                     
         elif userinput == "3":
             #Checking if user remembered to load in data first
-            if dataset == False:
+            if len(data) == 0:
                 print("\n" + "You must first load data.")
             else:
                 options = ["Mean Temperature", "Mean Growth rate",
@@ -168,15 +171,9 @@ def MainScript():
                            "Number of rows in data",
                            "Mean Growth rate when Temperature is less than 20 degrees",
                            "Mean Growth rate when Temperature is greater than 50 degrees"]
-                print(""" 
-          1. Mean Temperature
-          2. Mean Growth rate
-          3. Standard deviation of temperature
-          4. Standard deviation of Growth rate 
-          5. Number of rows in data
-          6. Mean Growth rate when Temperature is less than 20 degrees
-          7. Mean Growth rate when Temperature is greater than 50 degrees
-                      """)
+                
+                for i,option in enumerate(options):
+                    print(str(i+1) + ". " + option)
                 Statistics = False
                 while Statistics == False:
                     Statistics = input("Choose the number of the statistic you want calculated: ")
@@ -189,10 +186,12 @@ def MainScript():
                 
         elif userinput == "4":
             #Checking if user remembered to load in data first
-            if dataset == False:
+            if len(data) == 0:
                 print("\n" + "You must first load data.")
             else:
                 dataPlot(filteredData(data, filterData, filterActive))
+                printFilter(filterData, filterActive, bacteriaNames)
+                input("Press enter to continue ")
         
         elif userinput == "5":
             #quit
