@@ -19,7 +19,7 @@ def dataPlot(data):
     bacteriaNames = ['Salmonella\nenterica', 'Bacillus\ncereus', 'Listeria', 'Brochothrix\nthermosphacta']
     
     bacteria = []
-     #Add rows where bacteria=i+1 to that bacteria's row matrix
+    #Split data matrix into four matrices, one for each bacteria type.
     for i in range(4):
         bacteria.append( data[data[:,2] == i+1])
     
@@ -28,9 +28,9 @@ def dataPlot(data):
     #Make a bar chart with the number of the bacteria as x and amount of observations as y
     plt.bar(np.array(range(4)), bacteriaAmounts)
     #Set appropriate axes & legend
-    plt.ylabel('Bacteria')
-    plt.xlabel('Type')
-    plt.title('Number of bacteria types')
+    plt.ylabel('Measurements')
+    plt.xlabel('Bacteria type')
+    plt.title('Number of bacteria measurements')
     #Write names and amounts of bacteria types on x-axis
     plt.xticks(range(0,4), [str(x[1]) + " " + x[0] for x in zip(bacteriaNames,bacteriaAmounts)])
     #Make single ticks all the way to the most measured bacteria
@@ -51,6 +51,7 @@ def dataPlot(data):
     plt.ylabel('Growth rate')
     plt.yticks(np.arange(0, maxGrowth+0.1, maxGrowth/8))
     plt.xlabel('Temperature')
+    plt.title('Growth rate by temperature')
     #Make a legend for the bacteria growth plots for all bacterias we have measurements of
     legend = [(plts[x][0], bacteriaNames[x]) for x in range(4) if bacteriaAmounts[x] > 0]
     plt.legend((x[0] for x in legend), (x[1] for x in legend))
