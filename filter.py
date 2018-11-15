@@ -8,6 +8,9 @@ import numpy as np
 
 #Apparently how you check whether something is a float in python.
 def isFloat(string):
+    """
+    Checks whether a string is a float. Returns either true or false
+    """
     try:
         float(string)
     except ValueError:
@@ -48,6 +51,10 @@ def printFilter(filterData, filterActive, bacteriaNames):
                 print(str(filterData["Growth"][0]) + " <= Growth rate <= " + str(filterData["Growth"][1]))
 
 def filterMenu(filterData, filterActive, bacteriaNames):
+    """
+    Takes the user through the menu for changing the filter.
+    Returns a tuple with the new filterData and filterActive.
+    """
     print(""" Filter menu
 1. Set or add bacteria type to filter
 2. Set growth rate range filter
