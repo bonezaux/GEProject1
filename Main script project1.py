@@ -14,6 +14,11 @@ from dataPlot import dataPlot
 import filter
 
 def MainScript():
+    """This script lets the user interact with the program. 
+    The user can load in data, ask for calculations of different statistics, 
+    set filters and generate plots as long as he/she wishes, 
+    until he/she chooses to quit the program."""
+    
     data = np.array([])
     filterData = { "Bacteria" : [], "Growth": None}
     filterActive = False
