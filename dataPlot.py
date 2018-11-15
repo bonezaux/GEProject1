@@ -1,7 +1,8 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 """
 Created on Thu Oct 25 14:16:25 2018
-
 @author: Carl
 """
 import numpy as np
@@ -34,7 +35,7 @@ def dataPlot(data):
     #Write names and amounts of bacteria types on x-axis
     plt.xticks(range(0,4), [str(x[1]) + " " + x[0] for x in zip(bacteriaNames,bacteriaAmounts)])
     #Make single ticks all the way to the most measured bacteria
-    plt.yticks(np.arange(0,max(bacteriaAmounts)+1, int(max(bacteriaAmounts)/5)))
+    plt.yticks(np.arange(0,max(bacteriaAmounts)+1, int(max(bacteriaAmounts)/5 if max(bacteriaAmounts) >= 5 else 1)))
     plt.show()
     
     #Sort the bacteria arrays by temperature
@@ -44,12 +45,13 @@ def dataPlot(data):
     
     plts = []
     #Plot all bacteria arrays, growth to temperature
+    #If only one datapoint a circle is plotted, otherwise a line
     for single in bacteria:
-        plts.append(plt.plot(single[:,0], single[:,1]))
+        plts.append(plt.plot(single[:,0], single[:,1], 'o' if len(single) == 1 else '-' ))
     #Set appropriate axes & legend
     plt.axis([10,60,0,maxGrowth+0.1])
     plt.ylabel('Growth rate')
-    plt.yticks(np.arange(0, maxGrowth+0.1, maxGrowth/8))
+    plt.yticks(np.arange(0, 1, 0.1))
     plt.xlabel('Temperature')
     plt.title('Growth rate by temperature')
     #Make a legend for the bacteria growth plots for all bacterias we have measurements of
