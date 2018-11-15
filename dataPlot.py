@@ -1,7 +1,8 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 """
 Created on Thu Oct 25 14:16:25 2018
-
 @author: Carl
 """
 import numpy as np
@@ -44,8 +45,9 @@ def dataPlot(data):
     
     plts = []
     #Plot all bacteria arrays, growth to temperature
+    #If only one datapoint a circle is plotted, otherwise a line
     for single in bacteria:
-        plts.append(plt.plot(single[:,0], single[:,1]))
+        plts.append(plt.plot(single[:,0], single[:,1], 'o' if len(single) == 1 else '-' ))
     #Set appropriate axes & legend
     plt.axis([10,60,0,maxGrowth+0.1])
     plt.ylabel('Growth rate')
